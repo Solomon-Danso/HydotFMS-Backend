@@ -18,7 +18,7 @@ use App\Http\Controllers\DashBoard;
 use App\Http\Controllers\APPS;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\MasterControllerV1;
-
+use App\Http\Controllers\WebsiteConfigurationController;
 
 
 
@@ -134,6 +134,10 @@ Route::middleware([PrepaidMeterMiddleware::class])->group(function () {
      Route::post('ViewCollectionAccount', [MasterControllerV1::class, 'ViewCollectionAccount']);
      Route::post('ViewCollectionAccountHistory', [MasterControllerV1::class, 'ViewCollectionAccountHistory']);
 
+/*Main Website Configuration */
+
+Route::post('ViewMainWebsite', [WebsiteConfigurationController::class, 'ViewMainWebsite']);
+
 
 
 
@@ -181,6 +185,29 @@ Route::middleware([PrepaidMeterMiddleware::class])->group(function () {
 
      // Routes that require authentication
      Route::middleware([ApiAuthenticator::class])->group(function () {
+
+         /**********************************************
+          *                                            *
+          *   ⚙️ Website CONFIGURATIONS ROUTES          *
+          *                                            *
+          **********************************************/
+
+        Route::post('WebsiteSetup', [WebsiteConfigurationController::class, 'WebsiteSetup']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
          /**********************************************
           *                                            *
