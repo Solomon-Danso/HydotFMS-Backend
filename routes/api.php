@@ -137,6 +137,14 @@ Route::middleware([PrepaidMeterMiddleware::class])->group(function () {
 /*Main Website Configuration */
 
 Route::post('ViewMainWebsite', [WebsiteConfigurationController::class, 'ViewMainWebsite']);
+Route::post('ViewSingleExplore', [WebsiteConfigurationController::class, 'ViewSingleExplore']);
+Route::post('ViewAllExplore', [WebsiteConfigurationController::class, 'ViewAllExplore']);
+Route::post('ViewSingleExploreSRC', [WebsiteConfigurationController::class, 'ViewSingleExploreSRC']);
+Route::post('ViewSpecificExploreSRC', [WebsiteConfigurationController::class, 'ViewSpecificExploreSRC']);
+Route::post('ViewAllExploreSRC', [WebsiteConfigurationController::class, 'ViewAllExploreSRC']);
+Route::post('ViewSingleExploreSlide', [WebsiteConfigurationController::class, 'ViewSingleExploreSlide']);
+Route::post('ViewSpecificExploreSlide', [WebsiteConfigurationController::class, 'ViewSpecificExploreSlide']);
+Route::post('ViewAllExploreSlide', [WebsiteConfigurationController::class, 'ViewAllExploreSlide']);
 
 
 
@@ -193,6 +201,13 @@ Route::post('ViewMainWebsite', [WebsiteConfigurationController::class, 'ViewMain
           **********************************************/
 
         Route::post('WebsiteSetup', [WebsiteConfigurationController::class, 'WebsiteSetup']);
+        Route::post('CreateExplore', [WebsiteConfigurationController::class, 'CreateExplore']);
+        Route::post('UpdateExplore', [WebsiteConfigurationController::class, 'UpdateExplore']);
+        Route::post('DeletedExplore', [WebsiteConfigurationController::class, 'DeletedExplore']);
+        Route::post('CreateExploreSRC', [WebsiteConfigurationController::class, 'CreateExploreSRC']);
+        Route::post('DeletedExploreSRC', [WebsiteConfigurationController::class, 'DeletedExploreSRC']);
+        Route::post('CreateExploreSlide', [WebsiteConfigurationController::class, 'CreateExploreSlide']);
+        Route::post('DeletedExploreSlide', [WebsiteConfigurationController::class, 'DeletedExploreSlide']);
 
 
 

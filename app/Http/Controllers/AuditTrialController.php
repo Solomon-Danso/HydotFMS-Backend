@@ -530,7 +530,14 @@ function RoleList(Request $req){
     "Can_Do_Delivery_To_Customers",
     "Can_Handle_Credit_Sales",
     "Can_Configure_WebsiteSetup",
-    
+    "Can_Create_ExploreSection",
+    "Can_Update_ExploreSection",
+    "Can_Delete_ExploreSection",
+    "Can_Create_ExploreSRC",
+     "Can_Delete_ExploreSRC",
+    "Can_Create_ExploreSpecs",
+     "Can_Delete_ExploreSpecs",
+
 
 
 
