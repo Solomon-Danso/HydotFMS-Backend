@@ -362,7 +362,7 @@ class WebsiteConfigurationController extends Controller
         $s->ExploreID = $exP->ExploreID;
 
         $fields = [
-           "Title","Description"
+           "Title","Description","Section"
         ];
 
         foreach($fields as $field){
@@ -421,7 +421,7 @@ class WebsiteConfigurationController extends Controller
 
         $this->audit->RateLimit($req->ip());
 
-        $s = ExploreSRC::where("id", $req->Id)->first();
+        $s = ExploreSlide::where("id", $req->Id)->first();
         if(!$s){
             return response()->json(["message" => "Explore does not exist"], 400);
 
@@ -438,7 +438,7 @@ class WebsiteConfigurationController extends Controller
 
         $this->audit->RateLimit($req->ip());
 
-        $s = ExploreSRC::where("ExploreID", $req->ExploreID)->get();
+        $s = ExploreSlide::where("ExploreID", $req->ExploreID)->get();
         if(!$s){
             return response()->json(["message" => "Explore does not exist"], 400);
 
@@ -454,7 +454,7 @@ class WebsiteConfigurationController extends Controller
     public function ViewAllExploreSlide(Request $req){
 
         $this->audit->RateLimit($req->ip());
-        $s = ExploreSRC::get();
+        $s = ExploreSlide::get();
        return $s;
 
 
