@@ -543,7 +543,8 @@ function RoleList(Request $req){
     "Can_Create_ServicesSection",
     "Can_Update_ServiceSection",
     "Can_Delete_ServiceSection",
-    
+    "Can_Create_ServicesDetails",
+    "Can_Delete_ServicesDetails",
 
 
 

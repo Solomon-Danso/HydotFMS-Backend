@@ -10,7 +10,7 @@ use App\Models\ExploreSRC;
 use App\Models\ExploreSlide;
 use App\Models\Sliders;
 use App\Models\Services;
-
+use App\Models\ServicesDetails;
 
 
 
@@ -754,6 +754,124 @@ class WebsiteConfigurationController extends Controller
 
         $this->audit->RateLimit($req->ip());
         $s = Services::get();
+       return $s;
+
+
+    }
+
+
+    public function CreateServicesDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ServicesDetails");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+     $exP = Services::where("ServiceID", $req->ServiceID)->first();
+     if(!$exP){
+         return response()->json(["message" => "Service does not exist"], 400);
+
+     }
+
+        $s = new ServicesDetails();
+
+        $s->ServiceID = $exP->ServiceID;
+
+        $fields = [
+           "Title","Description"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Added a specification to ".$exP->Title." in the Service section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Specification added successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to add ".$req->CoverType], 400);
+        }
+
+
+    }
+
+    public function DeletedServicesDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ServicesDetails");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = ServicesDetails::where("id", $req->Id)->where("ServiceID", $req->ServiceID)->first();
+        if(!$s){
+            return response()->json(["message" => "Service does not exist"], 400);
+
+        }
+
+
+        $saver = $s->delete();
+        if($saver){
+
+            $message = "Deleted Service Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Specification Deleted successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Delete Explore"], 400);
+        }
+
+
+    }
+
+    public function ViewSingleServicesDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = ServicesDetails::where("id", $req->Id)->first();
+        if(!$s){
+            return response()->json(["message" => "Services does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+
+    public function ViewSpecificServicesDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = ServicesDetails::where("ServiceID", $req->ServiceID)->get();
+        if(!$s){
+            return response()->json(["message" => "Service does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+
+    public function ViewAllServicesDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $s =ServicesDetails::get();
        return $s;
 
 
