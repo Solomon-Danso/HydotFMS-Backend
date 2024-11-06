@@ -128,39 +128,21 @@ function GetSchedule(){
 function SendChat(Request $req){
     $c = new Chat();
     $c->EmailId = $this->audit->IdGenerator();
-
-    if($req->Purpose=="Subscriber"){
-    $c->Purpose = "Subscriber";
-    $c->FullName= $c->EmailId;
+    $c->MessageLink = $req->MessageLink;
+    $c->Purpose = $req->Purpose;
+    $c->FullName= $req->FullName;
     $c->Email = $req->Email;
-    $c->Message = $req->Email." subscribed to the newsletter";
+    $c->Message = $req->Message;
 
     $saver = $c->save();
     if($saver){
-        return response()->json(["message"=>"Subscribed successfully"],200);
-    }
-    else{
-        return response()->json(["message"=>"Apologies, we were unable to subscribe you to our newsletter. Please check your internet connection and try again. "],400);
-    }
-
-
-
-    }
-    else{
-        $c->Purpose = "Enquiry";
-        $c->FullName= $req->FullName;
-        $c->Email = $req->Email;
-        $c->Message = $req->Message;
-
-        $saver = $c->save();
-    if($saver){
-        return response()->json(["message"=>"Message sent successfully"],200);
+        return response()->json(["message"=>"Message Sent successfully"],200);
     }
     else{
         return response()->json(["message"=>"Apologies, we were unable to send your message. Please check your internet connection and try again. "],400);
     }
 
-    }
+
 
 }
 
