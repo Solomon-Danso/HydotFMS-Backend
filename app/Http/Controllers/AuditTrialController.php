@@ -550,6 +550,8 @@ function RoleList(Request $req){
     "Can_Delete_RentACar",
     "Can_Create_RentACarSRC",
     "Can_Delete_RentACarSRC",
+    "Can_Create_RentACarSpecs",
+    "Can_Delete_RentACarSpecs",
     
 
 
