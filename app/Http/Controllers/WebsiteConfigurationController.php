@@ -9,6 +9,13 @@ use App\Models\Explore;
 use App\Models\ExploreSRC;
 use App\Models\ExploreSlide;
 use App\Models\Sliders;
+use App\Models\Services;
+
+
+
+
+
+
 
 class WebsiteConfigurationController extends Controller
 {
@@ -191,7 +198,7 @@ class WebsiteConfigurationController extends Controller
             return response()->json(["message" => "Explore Deleted successfully"], 200);
 
         }else{
-            return response()->json(["message" => "Failed to Deleted Explore"], 400);
+            return response()->json(["message" => "Failed to Delete Explore"], 400);
         }
 
 
@@ -295,7 +302,7 @@ class WebsiteConfigurationController extends Controller
             return response()->json(["message" => "Explore Deleted successfully"], 200);
 
         }else{
-            return response()->json(["message" => "Failed to Deleted Explore"], 400);
+            return response()->json(["message" => "Failed to Delete Explore"], 400);
         }
 
 
@@ -525,7 +532,6 @@ class WebsiteConfigurationController extends Controller
             $s->Src = $req->file("Src")->store("", "public");
         }
 
-        $s->SliderID = $this->audit->IdGenerator();
 
         $fields = [
            "CoverType", "Title", "SubTitle"
@@ -607,6 +613,154 @@ class WebsiteConfigurationController extends Controller
 
 
     }
+
+
+
+    public function CreateServices(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ServicesSection");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = new Services();
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+
+        $s->ServiceID = $this->audit->IdGenerator();
+
+        $fields = [
+           "CoverType", "Title", "SubTitle", "Description"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Created Services Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Services created successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to create Services"], 400);
+        }
+
+
+    }
+
+    public function UpdateServices(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_ServiceSection");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = Services::where("ServiceID", $req->ServiceID)->first();
+        if(!$s){
+            return response()->json(["message" => "Explore does not exist"], 400);
+
+        }
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+
+        $fields = [
+           "CoverType", "Title", "SubTitle", "Description"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Updated Service Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Service Updated successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Update Service"], 400);
+        }
+
+
+    }
+
+    public function DeletedService(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ServiceSection");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = Services::where("ServiceID", $req->ServiceID)->first();
+        if(!$s){
+            return response()->json(["message" => "Service does not exist"], 400);
+
+        }
+
+
+        $saver = $s->delete();
+        if($saver){
+
+            $message = "Deleted Service Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Service Deleted successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Delete Service"], 400);
+        }
+
+
+    }
+
+    public function ViewSingleService(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = Services::where("ServiceID", $req->ServiceID)->first();
+        if(!$s){
+            return response()->json(["message" => "Explore does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+    public function ViewAllService(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $s = Services::get();
+       return $s;
+
+
+    }
+
+
+
 
 
 

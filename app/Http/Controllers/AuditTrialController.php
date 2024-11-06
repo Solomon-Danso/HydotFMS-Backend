@@ -540,6 +540,10 @@ function RoleList(Request $req){
     "Can_Create_SlideSection",
     "Can_Update_SliderSection",
     "Can_Delete_SliderSection",
+    "Can_Create_ServicesSection",
+    "Can_Update_ServiceSection",
+    "Can_Delete_ServiceSection",
+    
 
 
 

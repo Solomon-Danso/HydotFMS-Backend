@@ -149,6 +149,8 @@ Route::post('ViewAllExploreSlide', [WebsiteConfigurationController::class, 'View
 Route::post('ViewSingleSlider', [WebsiteConfigurationController::class, 'ViewSingleSlider']);
 Route::post('ViewAllSlider', [WebsiteConfigurationController::class, 'ViewAllSlider']);
 
+Route::post('ViewSingleService', [WebsiteConfigurationController::class, 'ViewSingleService']);
+Route::post('ViewAllService', [WebsiteConfigurationController::class, 'ViewAllService']);
 
 
 
@@ -214,6 +216,10 @@ Route::post('ViewAllSlider', [WebsiteConfigurationController::class, 'ViewAllSli
         Route::post('CreateSlider', [WebsiteConfigurationController::class, 'CreateSlider']);
         Route::post('UpdateSlider', [WebsiteConfigurationController::class, 'UpdateSlider']);
         Route::post('DeletedSlider', [WebsiteConfigurationController::class, 'DeletedSlider']);
+
+        Route::post('CreateServices', [WebsiteConfigurationController::class, 'CreateServices']);
+        Route::post('UpdateServices', [WebsiteConfigurationController::class, 'UpdateServices']);
+        Route::post('DeletedService', [WebsiteConfigurationController::class, 'DeletedService']);
 
 
 
