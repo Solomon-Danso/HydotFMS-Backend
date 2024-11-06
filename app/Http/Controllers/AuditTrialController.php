@@ -534,9 +534,12 @@ function RoleList(Request $req){
     "Can_Update_ExploreSection",
     "Can_Delete_ExploreSection",
     "Can_Create_ExploreSRC",
-     "Can_Delete_ExploreSRC",
+    "Can_Delete_ExploreSRC",
     "Can_Create_ExploreSpecs",
-     "Can_Delete_ExploreSpecs",
+    "Can_Delete_ExploreSpecs",
+    "Can_Create_SlideSection",
+    "Can_Update_SliderSection",
+    "Can_Delete_SliderSection",
 
 
 
