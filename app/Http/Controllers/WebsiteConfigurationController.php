@@ -11,8 +11,8 @@ use App\Models\ExploreSlide;
 use App\Models\Sliders;
 use App\Models\Services;
 use App\Models\ServicesDetails;
-
-
+use App\Models\RentACar;
+use App\Models\RentACarSRC;
 
 
 
@@ -877,6 +877,279 @@ class WebsiteConfigurationController extends Controller
 
     }
 
+
+
+    public function CreateRentACar(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_RentACar");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = new RentACar();
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+        if($req->hasFile("DetailedPicture")){
+            $s->DetailedPicture = $req->file("DetailedPicture")->store("", "public");
+        }
+        $s->RentACarID = $this->audit->IdGenerator();
+
+        $fields = [
+           "CoverType", "Title", "SubTitle", "YearModel", "Price",
+           "GearType","FuelType"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Created RentACar Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "RentACar created successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to create RentACar"], 400);
+        }
+
+
+    }
+
+    public function UpdateRentACar(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_RentACar");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = RentACar::where("RentACarID", $req->RentACarID)->first();
+        if(!$s){
+            return response()->json(["message" => "RentACar does not exist"], 400);
+
+        }
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+        if($req->hasFile("DetailedPicture")){
+            $s->DetailedPicture = $req->file("DetailedPicture")->store("", "public");
+        }
+
+        $fields = [
+           "CoverType", "Title", "SubTitle", "YearModel", "Price",
+           "GearType","FuelType"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Updated Explore Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "RentACar Updated successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Update RentACar"], 400);
+        }
+
+
+    }
+
+    public function DeletedRentACar(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_RentACar");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = RentACar::where("RentACarID", $req->RentACarID)->first();
+        if(!$s){
+            return response()->json(["message" => "RentACar does not exist"], 400);
+
+        }
+
+
+        $saver = $s->delete();
+        if($saver){
+
+            $message = "Deleted RentACar Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "RentACar Deleted successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Delete RentACar"], 400);
+        }
+
+
+    }
+
+    public function ViewSingleRentACar(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = RentACar::where("RentACar", $req->RentACar)->first();
+        if(!$s){
+            return response()->json(["message" => "RentACar does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+    public function ViewAllRentACar(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $s = RentACar::get();
+       return $s;
+
+
+    }
+
+
+    public function CreateRentACarSRC(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_RentACarSRC");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+     $exP = RentACar::where("RentACarID", $req->RentACarID)->first();
+     if(!$exP){
+         return response()->json(["message" => "RentACar does not exist"], 400);
+
+     }
+
+        $s = new RentACarSRC();
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+
+        $s->RentACarID = $exP->RentACarID;
+
+        $fields = [
+           "CoverType"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Added a ".$req->CoverType."to ".$exP->Title." in the explore section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => $req->CoverType." added successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to add ".$req->CoverType], 400);
+        }
+
+
+    }
+
+    public function DeletedRentACarSRC(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_RentACarSRC");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = RentACarSRC::where("id", $req->Id)->where("RentACarID", $req->RentACarID)->first();
+        if(!$s){
+            return response()->json(["message" => "RentACar does not exist"], 400);
+
+        }
+
+
+        $saver = $s->delete();
+        if($saver){
+
+            $message = "Deleted RentACar Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "RentACar Deleted successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Delete RentACarSRC"], 400);
+        }
+
+
+    }
+
+    public function ViewSingleRentACarSRC(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = RentACarSRC::where("id", $req->Id)->first();
+        if(!$s){
+            return response()->json(["message" => "RentACarSRC does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+
+    public function ViewSpecificRentACarSRC(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = RentACarSRC::where("RentACarID", $req->RentACarID)->get();
+        if(!$s){
+            return response()->json(["message" => "RentACar does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+
+    public function ViewAllRentACarSRC(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $s = RentACarSRC::get();
+       return $s;
+
+
+    }
 
 
 

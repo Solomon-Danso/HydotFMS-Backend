@@ -156,6 +156,16 @@ Route::post('ViewAllServicesDetails', [WebsiteConfigurationController::class, 'V
 Route::post('ViewSpecificServicesDetails', [WebsiteConfigurationController::class, 'ViewSpecificServicesDetails']);
 Route::post('ViewSingleServicesDetails', [WebsiteConfigurationController::class, 'ViewSingleServicesDetails']);
 
+Route::post('ViewSingleRentACar', [WebsiteConfigurationController::class, 'ViewSingleRentACar']);
+Route::post('ViewAllRentACar', [WebsiteConfigurationController::class, 'ViewAllRentACar']);
+
+Route::post('ViewSingleRentACarSRC', [WebsiteConfigurationController::class, 'ViewSingleRentACarSRC']);
+Route::post('ViewSpecificRentACarSRC', [WebsiteConfigurationController::class, 'ViewSpecificRentACarSRC']);
+Route::post('ViewAllRentACarSRC', [WebsiteConfigurationController::class, 'ViewAllRentACarSRC']);
+
+
+
+
 
 
 
@@ -227,7 +237,13 @@ Route::post('ViewSingleServicesDetails', [WebsiteConfigurationController::class,
 
         Route::post('CreateServicesDetails', [WebsiteConfigurationController::class, 'CreateServicesDetails']);
         Route::post('DeletedServicesDetails', [WebsiteConfigurationController::class, 'DeletedServicesDetails']);
-        
+
+        Route::post('CreateRentACar', [WebsiteConfigurationController::class, 'CreateRentACar']);
+        Route::post('UpdateRentACar', [WebsiteConfigurationController::class, 'UpdateRentACar']);
+        Route::post('DeletedRentACar', [WebsiteConfigurationController::class, 'DeletedRentACar']);
+
+        Route::post('CreateRentACarSRC', [WebsiteConfigurationController::class, 'CreateRentACarSRC']);
+        Route::post('DeletedRentACarSRC', [WebsiteConfigurationController::class, 'DeletedRentACarSRC']);
 
 
 
