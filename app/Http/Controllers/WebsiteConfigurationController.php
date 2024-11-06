@@ -14,7 +14,8 @@ use App\Models\ServicesDetails;
 use App\Models\RentACar;
 use App\Models\RentACarSRC;
 use App\Models\RentACarSpec;
-
+use App\Models\Blog;
+use App\Models\BlogDetails;
 
 
 class WebsiteConfigurationController extends Controller
@@ -1270,6 +1271,267 @@ class WebsiteConfigurationController extends Controller
     }
 
 
+    public function CreateBlog(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_Blog");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = new Blog();
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+
+        $s->BlogID = $this->audit->IdGenerator();
+
+        $fields = [
+           "CoverType", "Title", "SubTitle", "Description"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Created Blog Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Blog created successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to create Blog"], 400);
+        }
+
+
+    }
+
+    public function UpdateBlog(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_Blog");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = Blog::where("BlogID", $req->BlogID)->first();
+        if(!$s){
+            return response()->json(["message" => "Blog does not exist"], 400);
+
+        }
+
+        if($req->hasFile("Src")){
+            $s->Src = $req->file("Src")->store("", "public");
+        }
+
+        $fields = [
+           "CoverType", "Title", "SubTitle", "Description"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Updated Blog Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Blog Updated successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Update Blog"], 400);
+        }
+
+
+    }
+
+    public function DeletedBlog(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_Blog");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = Blog::where("BlogID", $req->BlogID)->first();
+        if(!$s){
+            return response()->json(["message" => "Blog does not exist"], 400);
+
+        }
+
+
+        $saver = $s->delete();
+        if($saver){
+
+            $message = "Deleted Blog Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Blog Deleted successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Delete Blog"], 400);
+        }
+
+
+    }
+
+    public function ViewSingleBlog(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = Blog::where("BlogID", $req->BlogID)->first();
+        if(!$s){
+            return response()->json(["message" => "Blog does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+    public function ViewAllBlog(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $s = Blog::get();
+       return $s;
+
+
+    }
+
+
+
+    public function CreateBlogDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_BlogDetails");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+     $exP = Blog::where("BlogID", $req->BlogID)->first();
+     if(!$exP){
+         return response()->json(["message" => "Blog does not exist"], 400);
+
+     }
+
+        $s = new BlogDetails();
+
+        $s->BlogID = $exP->BlogID;
+
+        $fields = [
+           "Title","Description"
+        ];
+
+        foreach($fields as $field){
+
+            if($req->filled($field)){
+                $s->$field = $req->$field;
+            }
+
+        }
+
+        $saver = $s->save();
+        if($saver){
+
+            $message = "Added a specification to ".$exP->Title." in the Blog section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Specification added successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to add ".$req->CoverType], 400);
+        }
+
+
+    }
+
+    public function DeletedBlogDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_BlogDetails");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;  // Return the authorization failure response
+     }
+
+
+        $s = BlogDetails::where("id", $req->Id)->where("BlogID", $req->BlogID)->first();
+        if(!$s){
+            return response()->json(["message" => "Blog does not exist"], 400);
+
+        }
+
+
+        $saver = $s->delete();
+        if($saver){
+
+            $message = "Deleted Blog Section";
+            $this->audit->Auditor($req->AdminId, $message);
+            return response()->json(["message" => "Specification Deleted successfully"], 200);
+
+        }else{
+            return response()->json(["message" => "Failed to Delete Explore"], 400);
+        }
+
+
+    }
+
+    public function ViewSingleBlogDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = BlogDetails::where("id", $req->Id)->first();
+        if(!$s){
+            return response()->json(["message" => "Blog does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+
+    public function ViewSpecificBlogDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+
+        $s = BlogDetails::where("BlogID", $req->BlogID)->get();
+        if(!$s){
+            return response()->json(["message" => "Blog does not exist"], 400);
+
+        }
+
+
+       return $s;
+
+
+    }
+
+
+    public function ViewAllBlogDetails(Request $req){
+
+        $this->audit->RateLimit($req->ip());
+        $s =BlogDetails::get();
+       return $s;
+
+
+    }
 
 
 

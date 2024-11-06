@@ -167,6 +167,16 @@ Route::post('ViewSingleRentACarSpec', [WebsiteConfigurationController::class, 'V
 Route::post('ViewSpecificRentACarSpec', [WebsiteConfigurationController::class, 'ViewSpecificRentACarSpec']);
 Route::post('ViewAllRentACarSpec', [WebsiteConfigurationController::class, 'ViewAllRentACarSpec']);
 
+Route::post('ViewSingleBlog', [WebsiteConfigurationController::class, 'ViewSingleBlog']);
+Route::post('ViewAllBlog', [WebsiteConfigurationController::class, 'ViewAllBlog']);
+
+Route::post('ViewSingleBlogDetails', [WebsiteConfigurationController::class, 'ViewSingleBlogDetails']);
+Route::post('ViewSpecificBlogDetails', [WebsiteConfigurationController::class, 'ViewSpecificBlogDetails']);
+Route::post('ViewAllBlogDetails', [WebsiteConfigurationController::class, 'ViewAllBlogDetails']);
+
+
+
+
 
 
 
@@ -251,6 +261,12 @@ Route::post('ViewAllRentACarSpec', [WebsiteConfigurationController::class, 'View
         Route::post('CreateRentACarSpec', [WebsiteConfigurationController::class, 'CreateRentACarSpec']);
         Route::post('DeletedRentACarSpec', [WebsiteConfigurationController::class, 'DeletedRentACarSpec']);
 
+        Route::post('CreateBlog', [WebsiteConfigurationController::class, 'CreateBlog']);
+        Route::post('UpdateBlog', [WebsiteConfigurationController::class, 'UpdateBlog']);
+        Route::post('DeletedBlog', [WebsiteConfigurationController::class, 'DeletedBlog']);
+
+        Route::post('CreateBlogDetails', [WebsiteConfigurationController::class, 'CreateBlogDetails']);
+        Route::post('DeletedBlogDetails', [WebsiteConfigurationController::class, 'DeletedBlogDetails']);
 
 
 

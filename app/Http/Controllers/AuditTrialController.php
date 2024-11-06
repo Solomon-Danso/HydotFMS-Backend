@@ -552,7 +552,13 @@ function RoleList(Request $req){
     "Can_Delete_RentACarSRC",
     "Can_Create_RentACarSpecs",
     "Can_Delete_RentACarSpecs",
-    
+    "Can_Create_Blog",
+    "Can_Update_Blog",
+    "Can_Delete_Blog",
+    "Can_Create_BlogDetails",
+    "Can_Delete_BlogDetails",
+
+
 
 
 
