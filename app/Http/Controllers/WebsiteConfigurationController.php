@@ -32,7 +32,7 @@ class WebsiteConfigurationController extends Controller
 
     public function WebsiteSetup(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Configure_WebsiteSetup");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -47,7 +47,7 @@ class WebsiteConfigurationController extends Controller
 
         $fields = [
            "CompanyName", "ShopURL", "Location", "PhoneNumber", "Email",
-           "Whatsapp","Instagram","Facebook","LinkedIn","Latitude","Longitude"
+           "Whatsapp","Instagram","Facebook","LinkedIn",
         ];
 
         foreach($fields as $field){
@@ -74,7 +74,7 @@ class WebsiteConfigurationController extends Controller
 
 
     function ViewMainWebsite(Request $req){
-        $this->audit->RateLimit($req->ip());
+
         $s = WebsiteSetup::get();
         return $s;
     }
@@ -82,7 +82,7 @@ class WebsiteConfigurationController extends Controller
 
     public function CreateExplore(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ExploreSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -128,7 +128,7 @@ class WebsiteConfigurationController extends Controller
 
     public function UpdateExplore(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_ExploreSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -177,7 +177,7 @@ class WebsiteConfigurationController extends Controller
 
     public function DeletedExplore(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ExploreSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -207,7 +207,7 @@ class WebsiteConfigurationController extends Controller
 
     public function ViewSingleExplore(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = Explore::where("ExploreID", $req->ExploreID)->first();
         if(!$s){
@@ -223,7 +223,7 @@ class WebsiteConfigurationController extends Controller
 
     public function ViewAllExplore(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = Explore::get();
        return $s;
 
@@ -233,7 +233,7 @@ class WebsiteConfigurationController extends Controller
 
     public function CreateExploreSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ExploreSRC");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -281,7 +281,7 @@ class WebsiteConfigurationController extends Controller
 
     public function DeletedExploreSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ExploreSRC");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -311,7 +311,7 @@ class WebsiteConfigurationController extends Controller
 
     public function ViewSingleExploreSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = ExploreSRC::where("id", $req->Id)->first();
         if(!$s){
@@ -328,7 +328,7 @@ class WebsiteConfigurationController extends Controller
 
     public function ViewSpecificExploreSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = ExploreSRC::where("ExploreID", $req->ExploreID)->get();
         if(!$s){
@@ -344,7 +344,7 @@ class WebsiteConfigurationController extends Controller
 
 public function ViewAllExploreSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = ExploreSRC::get();
        return $s;
 
@@ -353,7 +353,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateExploreSlide(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ExploreSpecs");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -397,7 +397,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedExploreSlide(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ExploreSpecs");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -427,7 +427,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleExploreSlide(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = ExploreSlide::where("id", $req->Id)->first();
         if(!$s){
@@ -444,7 +444,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSpecificExploreSlide(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = ExploreSlide::where("ExploreID", $req->ExploreID)->get();
         if(!$s){
@@ -461,7 +461,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllExploreSlide(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = ExploreSlide::get();
        return $s;
 
@@ -472,7 +472,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateSlider(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_SlideSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -515,7 +515,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function UpdateSlider(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_SliderSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -561,7 +561,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedSlider(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_SliderSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -591,7 +591,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleSlider(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = Sliders::where("SliderID", $req->SliderID)->first();
         if(!$s){
@@ -607,7 +607,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllSlider(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = Sliders::get();
        return $s;
 
@@ -618,7 +618,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateServices(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ServicesSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -661,7 +661,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function UpdateServices(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_ServiceSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -706,7 +706,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedService(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ServiceSection");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -736,7 +736,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleService(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = Services::where("ServiceID", $req->ServiceID)->first();
         if(!$s){
@@ -752,7 +752,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllService(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = Services::get();
        return $s;
 
@@ -762,7 +762,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateServicesDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_ServicesDetails");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -806,7 +806,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedServicesDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_ServicesDetails");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -836,7 +836,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleServicesDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = ServicesDetails::where("id", $req->Id)->first();
         if(!$s){
@@ -853,7 +853,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSpecificServicesDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = ServicesDetails::where("ServiceID", $req->ServiceID)->get();
         if(!$s){
@@ -870,7 +870,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllServicesDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s =ServicesDetails::get();
        return $s;
 
@@ -881,7 +881,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateRentACar(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_RentACar");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -927,7 +927,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function UpdateRentACar(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_RentACar");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -976,7 +976,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedRentACar(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_RentACar");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1006,11 +1006,11 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleRentACar(Request $req){
 
-        $this->audit->RateLimit($req->ip());
 
-        $s = RentACar::where("RentACar", $req->RentACar)->first();
+
+        $s = RentACar::where("RentACarID", $req->RentACarID)->first();
         if(!$s){
-            return response()->json(["message" => "RentACar does not exist"], 400);
+            return response()->json(["message" => "Fleet does not exist"], 400);
 
         }
 
@@ -1022,7 +1022,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllRentACar(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = RentACar::get();
        return $s;
 
@@ -1032,7 +1032,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateRentACarSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_RentACarSRC");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1080,7 +1080,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedRentACarSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_RentACarSRC");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1110,7 +1110,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleRentACarSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = RentACarSRC::where("id", $req->Id)->first();
         if(!$s){
@@ -1127,7 +1127,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSpecificRentACarSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = RentACarSRC::where("RentACarID", $req->RentACarID)->get();
         if(!$s){
@@ -1144,7 +1144,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllRentACarSRC(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = RentACarSRC::get();
        return $s;
 
@@ -1154,7 +1154,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateRentACarSpec(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_RentACarSpecs");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1198,7 +1198,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedRentACarSpec(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_RentACarSpecs");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1228,7 +1228,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleRentACarSpec(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = RentACarSpec::where("id", $req->Id)->first();
         if(!$s){
@@ -1245,7 +1245,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSpecificRentACarSpec(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = RentACarSpec::where("RentACarID", $req->RentACarID)->get();
         if(!$s){
@@ -1262,7 +1262,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllRentACarSpec(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = RentACarSpec::get();
        return $s;
 
@@ -1272,7 +1272,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateBlog(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_Blog");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1315,7 +1315,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function UpdateBlog(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Update_Blog");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1360,7 +1360,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedBlog(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_Blog");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1390,7 +1390,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleBlog(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = Blog::where("BlogID", $req->BlogID)->first();
         if(!$s){
@@ -1406,7 +1406,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllBlog(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s = Blog::get();
        return $s;
 
@@ -1417,7 +1417,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function CreateBlogDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Create_BlogDetails");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1461,7 +1461,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function DeletedBlogDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Delete_BlogDetails");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
@@ -1491,7 +1491,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSingleBlogDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = BlogDetails::where("id", $req->Id)->first();
         if(!$s){
@@ -1508,7 +1508,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewSpecificBlogDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
 
         $s = BlogDetails::where("BlogID", $req->BlogID)->get();
         if(!$s){
@@ -1525,7 +1525,7 @@ public function ViewAllExploreSRC(Request $req){
 
     public function ViewAllBlogDetails(Request $req){
 
-        $this->audit->RateLimit($req->ip());
+
         $s =BlogDetails::get();
        return $s;
 
