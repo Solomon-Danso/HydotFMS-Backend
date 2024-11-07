@@ -342,8 +342,7 @@ class WebsiteConfigurationController extends Controller
 
     }
 
-
-    public function ViewAllExploreSRC(Request $req){
+public function ViewAllExploreSRC(Request $req){
 
         $this->audit->RateLimit($req->ip());
         $s = ExploreSRC::get();
