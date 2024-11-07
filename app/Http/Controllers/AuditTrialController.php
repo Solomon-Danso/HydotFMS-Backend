@@ -557,6 +557,7 @@ function RoleList(Request $req){
     "Can_Delete_Blog",
     "Can_Create_BlogDetails",
     "Can_Delete_BlogDetails",
+    "Can_Access_Chat",
 
 
 

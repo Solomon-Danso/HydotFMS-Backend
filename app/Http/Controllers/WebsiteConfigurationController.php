@@ -36,7 +36,7 @@ class WebsiteConfigurationController extends Controller
         $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Configure_WebsiteSetup");
         if ($rp->getStatusCode() !== 200) {
          return $rp;  // Return the authorization failure response
-     }
+        }
 
 
         $s = WebsiteSetup::firstOrNew();

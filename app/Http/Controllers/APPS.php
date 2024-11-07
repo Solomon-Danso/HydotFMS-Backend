@@ -146,13 +146,23 @@ function SendChat(Request $req){
 
 }
 
-function GetChat(){
+function GetChat(Request $req){
+
+    $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Access_Chat");
+        if ($rp->getStatusCode() !== 200) {
+         return $rp;
+        }
+
     $c = Chat::orderBy("created_at","desc")->get();
 
     return response()->json(["chats"=>$c],200);
 }
 
 function GetOneEmail(Request $req){
+    $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Access_Chat");
+    if ($rp->getStatusCode() !== 200) {
+     return $rp;
+    }
     $c = Chat::where("EmailId", $req->EmailId)->first();
     if ($c == null) {
         return response()->json(["message" => "Chat not found"]);
@@ -163,6 +173,10 @@ function GetOneEmail(Request $req){
 
 function ReplyTheChat(Request $req)
 {
+    $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Access_Chat");
+    if ($rp->getStatusCode() !== 200) {
+     return $rp;
+    }
     $c = Chat::where("EmailId", $req->EmailId)->first();
     if ($c == null) {
         return response()->json(["message" => "Chat not found"]);
@@ -201,6 +215,10 @@ function ReplyTheChat(Request $req)
 }
 
 function GetOneReply(Request $req){
+    $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Access_Chat");
+    if ($rp->getStatusCode() !== 200) {
+     return $rp;
+    }
     $c = ReplyChat::where("ReplyId", $req->EmailId)
    -> orderBy('created_at','desc')
     ->first();
