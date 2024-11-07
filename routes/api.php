@@ -103,7 +103,7 @@ Route::middleware([PrepaidMeterMiddleware::class])->group(function () {
      Route::post('CountVisitors', [DashBoard::class, 'CountVisitors']);
      Route::post('CountCountryVisitors', [DashBoard::class, 'CountCountryVisitors']);
 
-
+     Route::post('RouteViewAuthenticator', [APPS::class, 'RouteViewAuthenticator']);
 
      Route::post('SendChat', [APPS::class, 'SendChat']);
      Route::post('CreateSchedular', [APPS::class, 'CreateSchedular']);

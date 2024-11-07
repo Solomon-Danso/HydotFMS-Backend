@@ -146,6 +146,16 @@ function SendChat(Request $req){
 
 }
 
+function RouteViewAuthenticator (Request $req){
+    $rp =  $this->audit->RoleAuthenticator($req->AdminId, $req->Role);
+    if ($rp->getStatusCode() !== 200) {
+     return $rp;
+    }
+
+}
+
+
+
 function GetChat(Request $req){
 
     $rp =  $this->audit->RoleAuthenticator($req->AdminId, "Can_Access_Chat");
