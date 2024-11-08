@@ -149,7 +149,7 @@ class WebsiteConfigurationController extends Controller
         }
 
         $fields = [
-           "CoverType", "Title", "SubTitle", "YearModel", "Price",
+           "CoverType", "Title", "SubTitle", "YearModel",
            "GearType","FuelType"
         ];
 
@@ -160,6 +160,17 @@ class WebsiteConfigurationController extends Controller
             }
 
         }
+
+        if($req->filled("Price")){
+
+            if($req->Price>1){
+                $s->Price = $req->Price;
+            }
+
+
+        }
+
+
 
         $saver = $s->save();
         if($saver){
@@ -948,7 +959,7 @@ public function ViewAllExploreSRC(Request $req){
         }
 
         $fields = [
-           "CoverType", "Title", "SubTitle", "YearModel", "Price",
+           "CoverType", "Title", "SubTitle", "YearModel",
            "GearType","FuelType"
         ];
 
@@ -957,6 +968,16 @@ public function ViewAllExploreSRC(Request $req){
             if($req->filled($field)){
                 $s->$field = $req->$field;
             }
+
+        }
+
+
+        if($req->filled("Price")){
+
+            if($req->Price>1){
+                $s->Price = $req->Price;
+            }
+
 
         }
 
