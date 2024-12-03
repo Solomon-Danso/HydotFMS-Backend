@@ -408,7 +408,10 @@ function UpdateProduct(Request $req){
     }
 
     if($req->filled("Price")){
-        $s->Price = $req->Price;
+        if($req->Price>1){
+            $s->Price = $req->Price;
+        }
+
     }
 
     if($req->filled("Quantity")){
